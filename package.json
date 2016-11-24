@@ -16,5 +16,12 @@
   "bugs": {
     "url": "https://github.com/rosen-vladimirov/install-node/issues"
   },
-  "homepage": "https://github.com/rosen-vladimirov/install-node#readme"
+  "homepage": "https://github.com/rosen-vladimirov/install-node#readme",
+  "dependencies": {
+    "electron-sudo": "^4.0.12",
+    "get-shell-vars": "^1.0.0",
+    "semver": "^5.3.0",
+    "shelljs": "^0.7.5",
+    "temp": "^0.8.3"
+  }
 }

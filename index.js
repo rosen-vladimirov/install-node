@@ -1,35 +1,20 @@
-const fs = require("fs");
-const path = require("path");
-const getShellVars = require("get-shell-vars");
-
-const logFilePath = path.join(__dirname, "mylog.log");
-const logFile = fs.openSync(logFilePath, "a");
-
-const logMessage = (message) => {
-    fs.writeSync(logFile, message);
-};
-
-const env = getShellVars.getEnvironmentVariables();
-
-env.PATH += ":/usr/local/bin";
-
-const execSync = (command) => {
-    return (childProcess.execSync(command, { env }) || "").toString();
-};
-
+const helpers = require("./lib/helpers");
 const { platform } = process;
 
-let platformImplementation;
+let platformConfig;
 
 switch (platform) {
     case "darwin":
-        platformImplementation = require("./lib/mac");
+        platformConfig = require("./lib/mac");
         break;
     case "win32":
-        platformImplementation = require("./lib/windows");
+        platformConfig = require("./lib/windows");
         break;
     default:
         throw new Error(`Unsupported platform: ${platform}`);
 }
 
-module.exports = platformImplementation(logMessage);
+module.exports = {
+    ensureNode: helpers.ensureNode.bind(null, platformConfig),
+    ensureCLI: helpers.ensureCLI
+};
